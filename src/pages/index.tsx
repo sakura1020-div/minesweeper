@@ -1,29 +1,27 @@
 import { useState } from 'react';
 import styles from './index.module.css';
 const Home = () => {
-  const getNumber = () => {
-    const mp: number[] = [];
+  const mp: number[] = [];
+  const mp2: number[] = [];
+  const getNumber = (m: number) => {
     mp.length = 0;
-    const random1 = Math.floor(Math.random() * 9);
+    m = Math.floor(Math.random() * 9);
     // const random2 = Math.floor(Math.random() * 9);
-    console.log(random1);
     // console.log(random2);
-    mp.push(random1);
+    mp.push(m);
     // mp.push(random2);
     // console.log(mp);
     return mp;
   };
-  const getNumbering = () => {
-    const mp: number[] = [];
-    mp.length = 0;
-    const random2 = Math.floor(Math.random() * 9);
+  const getNumbering = (n: number) => {
+    mp2.length = 0;
+    n = Math.floor(Math.random() * 9);
     // const random2 = Math.floor(Math.random() * 9);
-    console.log(random2);
     // console.log(random2);
-    mp.push(random2);
+    mp2.push(n);
     // mp.push(random2);
     // console.log(mp);
-    return mp;
+    return mp2;
   };
   const [bombMap, setBombMap] = useState([
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -36,33 +34,34 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]);
-  const [userInputs, setUserInputs] = useState([
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  ]);
+  // const [userInputs, setUserInputs] = useState([
+  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  // ]);
   const clickHandler = (x: number, y: number) => {
-    const newUserInputs: number[][] = structuredClone(userInputs);
+    // const newUserInputs: number[][] = structuredClone(userInputs);
     const newBombMap: number[][] = structuredClone(bombMap);
     const bombNum = bombMap.flat().filter((num) => num === -1);
-    console.log(bombNum);
-    console.log(getNumber());
-    console.log(getNumbering());
-     while (bombNum.length < 11) {
-       console.log()
-       if (getNumber() !== y && getNumbering() !== x) {
-         newBombMap[y][x] = -1;
-       }
-       setBombMap(bombMap);
-       console.log(getNumber);
-       console.log(bombMap);
-     }
+    // while (bombNum.length < 11) {
+    console.log(newBombMap)
+    if (getNumber(mp) !== [y] && getNumbering(mp2) !== [x]) {
+      console.log(y, x);
+      console.log(getNumber(mp));
+      console.log(getNumbering(mp2));
+
+      newBombMap[mp][mp2] = -1;
+      // }
+      console.log(newBombMap);
+      setBombMap(bombMap);
+      console.log(bombMap);
+    }
   };
   return (
     <div className={styles.container}>
