@@ -34,24 +34,23 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]);
-  // const [userInputs, setUserInputs] = useState([
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  // ]);
+  const [userInputs, setUserInputs] = useState([
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ]);
   const clickHandler = (x: number, y: number) => {
-    // const newUserInputs: number[][] = structuredClone(userInputs);
+    const newUserInputs: number[][] = structuredClone(userInputs);
     const newBombMap: number[][] = structuredClone(bombMap);
-    const bombNum = bombMap.flat().filter((num) => num === -1);
+    const bombNum = newBombMap.flat().filter((num) => num === -1);
     // while (bombNum.length < 11) {
-    console.log(newBombMap)
-    if (getNumber(mp) !== [y] && getNumbering(mp2) !== [x]) {
+    if (getNumber(mp) !== y && getNumbering(mp2) !== x) {
       console.log(y, x);
       console.log(getNumber(mp));
       console.log(getNumbering(mp2));
@@ -59,8 +58,9 @@ const Home = () => {
       newBombMap[mp][mp2] = -1;
       // }
       console.log(newBombMap);
-      setBombMap(bombMap);
+      setBombMap(newBombMap);
       console.log(bombMap);
+      console.log(bombNum);
     }
   };
   return (
