@@ -49,19 +49,18 @@ const Home = () => {
     const newUserInputs: number[][] = structuredClone(userInputs);
     const newBombMap: number[][] = structuredClone(bombMap);
     const bombNum = newBombMap.flat().filter((num) => num === -1);
-    // while (bombNum.length < 11) {
+    // while (bombNum.length < 10) {
     if (getNumber(mp) !== y && getNumbering(mp2) !== x) {
-      console.log(y, x);
-      console.log(getNumber(mp));
-      console.log(getNumbering(mp2));
-
+      // console.log(y, x);
+      // console.log(getNumber(mp));
+      // console.log(getNumbering(mp2));
       newBombMap[mp][mp2] = -1;
-      // }
       console.log(newBombMap);
       setBombMap(newBombMap);
       console.log(bombMap);
       console.log(bombNum);
     }
+    // }
   };
   return (
     <div className={styles.container}>
