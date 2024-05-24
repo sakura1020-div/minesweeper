@@ -1,5 +1,32 @@
 import { useState } from 'react';
 import styles from './index.module.css';
+const directions = [
+  [1, 0],
+  [1, 1],
+  [0, 1],
+  [-1, 1],
+  [-1, 0],
+  [-1, -1],
+  [0, -1],
+  [1, -1],
+];
+const judge = (y: number, x: number, board: number[][], count: number[]) => {
+  for (let y = 0; y < 9; y++) {
+    for (let x = 0; x < 9; x++) {
+      if (board[y][x] === 0) {
+        for (const direction of directions) {
+          if (
+            board[y + direction[0]] !== undefined &&
+            board[y + direction[0]][x + direction[1]] === -1
+          ) {
+            count.push(y);
+          }
+        }
+      }
+    }
+  }
+  return count;
+};
 const Home = () => {
   const mp: number[] = [];
   const mp2: number[] = [];
@@ -45,22 +72,32 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]);
-  const clickHandler = (x: number, y: number) => {
+  const clickHandler = (y: number, x: number) => {
     const newUserInputs: number[][] = structuredClone(userInputs);
     const newBombMap: number[][] = structuredClone(bombMap);
+    const memoryPosition: number[] = [];
     const bombNum = newBombMap.flat().filter((num) => num === -1);
-    // while (bombNum.length < 10) {
-    if (getNumber(mp) !== y && getNumbering(mp2) !== x) {
-      // console.log(y, x);
-      // console.log(getNumber(mp));
-      // console.log(getNumbering(mp2));
-      newBombMap[mp][mp2] = -1;
-      console.log(newBombMap);
-      setBombMap(newBombMap);
-      console.log(bombMap);
-      console.log(bombNum);
+    if (bombNum.length < 1) {
+      while (memoryPosition.length < 10) {
+        if (getNumber(mp) !== y && getNumbering(mp2) !== x) {
+          if (newBombMap[mp][mp2] === 0) {
+            memoryPosition.push(mp);
+            newBombMap[mp][mp2] = -1;
+          }
+        }
+      }
     }
-    // }
+    console.log(newBombMap);
+
+    const count: number[] = [];
+    if (judge(y, x, newBombMap, count)) {
+      newBombMap[y][x] = count.length;
+      console.log(count.length);
+      console.log(count);
+      setBombMap(newBombMap);
+    }
+    console.log(newBombMap);
+    setBombMap(newBombMap);
   };
   return (
     <div className={styles.container}>
