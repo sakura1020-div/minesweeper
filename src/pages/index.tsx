@@ -11,20 +11,22 @@ const directions = [
   [1, -1],
 ];
 const judge = (y: number, x: number, board: number[][], count: number[]) => {
-  for (let y = 0; y < 9; y++) {
-    for (let x = 0; x < 9; x++) {
-      if (board[y][x] === 0) {
-        for (const direction of directions) {
-          if (
-            board[y + direction[0]] !== undefined &&
-            board[y + direction[0]][x + direction[1]] === -1
-          ) {
-            count.push(y);
-          }
-        }
+  // for (let x = 0; x < 9; x++) {
+  //   for (let y = 0; y < 9; y++) {
+  if (board[y][x] === 0) {
+    count.length = 0;
+    for (const direction of directions) {
+      if (
+        board[y + direction[0]] !== undefined &&
+        board[y + direction[0]][x + direction[1]] === -1
+      ) {
+        count.push(y);
+        console.log(count);
       }
     }
   }
+  //   }
+  // }
   return count;
 };
 const Home = () => {
@@ -90,14 +92,17 @@ const Home = () => {
     console.log(newBombMap);
 
     const count: number[] = [];
-    if (judge(y, x, newBombMap, count)) {
-      newBombMap[y][x] = count.length;
-      console.log(count.length);
-      console.log(count);
-      setBombMap(newBombMap);
+    for (let x = 0; x < 9; x++) {
+      for (let y = 0; y < 9; y++) {
+        if (judge(x, y, newBombMap, count) && newBombMap[x][y] === 0) {
+          newBombMap[x][y] = count.length;
+          console.log(count.length);
+          console.log(count);
+          setBombMap(newBombMap);
+        }
+        console.log(newBombMap);
+      }
     }
-    console.log(newBombMap);
-    setBombMap(newBombMap);
   };
   return (
     <div className={styles.container}>
