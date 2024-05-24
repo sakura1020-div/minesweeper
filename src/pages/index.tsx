@@ -140,6 +140,13 @@ const Home = () => {
             </div>
           )),
         )}
+        {bombMap.map((row, y) =>
+          row.map((cell, x) => (
+            <div className={styles.cellStyle} key={`${x}-${y}`} onClick={() => clickHandler(x, y)}>
+              <div className={styles.cover} />
+            </div>
+          )),
+        )}
       </div>
     </div>
   );
