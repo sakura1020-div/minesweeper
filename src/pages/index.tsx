@@ -1,5 +1,34 @@
 import { useState } from 'react';
 import styles from './index.module.css';
+const directions = [
+  [1, 0],
+  [1, 1],
+  [0, 1],
+  [-1, 1],
+  [-1, 0],
+  [-1, -1],
+  [0, -1],
+  [1, -1],
+];
+const judge = (y: number, x: number, board: number[][], count: number[]) => {
+  // for (let x = 0; x < 9; x++) {
+  //   for (let y = 0; y < 9; y++) {
+  if (board[y][x] === 0) {
+    count.length = 0;
+    for (const direction of directions) {
+      if (
+        board[y + direction[0]] !== undefined &&
+        board[y + direction[0]][x + direction[1]] === -1
+      ) {
+        count.push(y);
+        console.log(count);
+      }
+    }
+  }
+  //   }
+  // }
+  return count;
+};
 const Home = () => {
   const mp: number[] = [];
   const mp2: number[] = [];
@@ -45,22 +74,34 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]);
-  const clickHandler = (x: number, y: number) => {
+  const clickHandler = (y: number, x: number) => {
     const newUserInputs: number[][] = structuredClone(userInputs);
     const newBombMap: number[][] = structuredClone(bombMap);
+    const memoryPosition: number[] = [];
     const bombNum = newBombMap.flat().filter((num) => num === -1);
-    // while (bombNum.length < 10) {
-    if (getNumber(mp) !== y && getNumbering(mp2) !== x) {
-      // console.log(y, x);
-      // console.log(getNumber(mp));
-      // console.log(getNumbering(mp2));
-      newBombMap[mp][mp2] = -1;
-      console.log(newBombMap);
-      setBombMap(newBombMap);
-      console.log(bombMap);
-      console.log(bombNum);
+    if (bombNum.length < 1) {
+      while (memoryPosition.length < 10) {
+        if (getNumber(mp) !== y && getNumbering(mp2) !== x) {
+          if (newBombMap[mp][mp2] === 0) {
+            memoryPosition.push(mp);
+            newBombMap[mp][mp2] = -1;
+          }
+        }
+      }
     }
-    // }
+    console.log(newBombMap);
+    const count: number[] = [];
+    for (let x = 0; x < 9; x++) {
+      for (let y = 0; y < 9; y++) {
+        if (judge(x, y, newBombMap, count) && newBombMap[x][y] === 0) {
+          newBombMap[x][y] = count.length;
+          console.log(count.length);
+          console.log(count);
+          setBombMap(newBombMap);
+        }
+        console.log(newBombMap);
+      }
+    }
   };
   return (
     <div className={styles.container}>
@@ -68,7 +109,12 @@ const Home = () => {
         {bombMap.map((row, y) =>
           row.map((cell, x) => (
             <div className={styles.cellStyle} key={`${x}-${y}`} onClick={() => clickHandler(x, y)}>
-              {cell === -1 && (
+              {
+                <div
+                  className={styles.sampleStyle}
+                  style={{ backgrondPosition: 'cell*30px 0px' }}
+                />
+                /* {cell === -1 && (
                 <div className={styles.sampleStyle} style={{ backgroundPosition: '-300px 0px' }} />
               )}
               {cell === 1 && (
@@ -93,8 +139,16 @@ const Home = () => {
                 <div className={styles.sampleStyle} style={{ backgroundPosition: '-180px 0px' }} />
               )}
               {cell === 8 && (
-                <div className={styles.sampleStyle} style={{ backgroundPosition: '-210px 0px' }} />
-              )}
+                <div className={styles.sampleStyle} style={{ backgroundPosition: '-210px 0px' }} /> */
+              }
+              {/* )} */}
+            </div>
+          )),
+        )}
+        {bombMap.map((row, y) =>
+          row.map((cell, x) => (
+            <div className={styles.cellStyle} key={`${x}-${y}`} onClick={() => clickHandler(x, y)}>
+              <div className={styles.cover} />
             </div>
           )),
         )}
@@ -102,5 +156,4 @@ const Home = () => {
     </div>
   );
 };
-
 export default Home;
