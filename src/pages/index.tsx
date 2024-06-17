@@ -29,6 +29,35 @@ const judge = (y: number, x: number, board: number[][], count: number[]) => {
   // }
   return count;
 };
+const directions = [
+  [1, 0],
+  [1, 1],
+  [0, 1],
+  [-1, 1],
+  [-1, 0],
+  [-1, -1],
+  [0, -1],
+  [1, -1],
+];
+const judge = (y: number, x: number, board: number[][], count: number[]) => {
+  // for (let x = 0; x < 9; x++) {
+  //   for (let y = 0; y < 9; y++) {
+  if (board[y][x] === 0) {
+    count.length = 0;
+    for (const direction of directions) {
+      if (
+        board[y + direction[0]] !== undefined &&
+        board[y + direction[0]][x + direction[1]] === -1
+      ) {
+        count.push(y);
+        console.log(count);
+      }
+    }
+  }
+  //   }
+  // }
+  return count;
+};
 const Home = () => {
   const mp: number[] = [];
   const mp2: number[] = [];
@@ -75,8 +104,10 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]);
   const clickHandler = (y: number, x: number) => {
+  const clickHandler = (y: number, x: number) => {
     const newUserInputs: number[][] = structuredClone(userInputs);
     const newBombMap: number[][] = structuredClone(bombMap);
+    const memoryPosition: number[] = [];
     const memoryPosition: number[] = [];
     const bombNum = newBombMap.flat().filter((num) => num === -1);
     if (bombNum.length < 1) {
@@ -143,6 +174,13 @@ const Home = () => {
               {cell === 8 && (
                 <div className={styles.sampleStyle} style={{ backgroundPosition: '-210px 0px' }} />
               )}
+            </div>
+          )),
+        )}
+        {bombMap.map((row, y) =>
+          row.map((cell, x) => (
+            <div className={styles.cellStyle} key={`${x}-${y}`} onClick={() => clickHandler(x, y)}>
+              <div className={styles.cover} />
             </div>
           )),
         )}
