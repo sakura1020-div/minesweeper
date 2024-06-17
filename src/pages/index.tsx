@@ -106,19 +106,21 @@ const Home = () => {
   return (
     <div className={styles.container}>
       <div className={styles.boardStyle}>
+       <div className={styles.cover}
         {bombMap.map((row, y) =>
           row.map((cell, x) => (
             <div className={styles.cellStyle} key={`${x}-${y}`} onClick={() => clickHandler(x, y)}>
-              {
+              {/* {
                 <div
-                  className={styles.sampleStyle}
-                  style={{ backgrondPosition: 'cell*30px 0px' }}
+                  className={styles.sampleStyles}
+                  style={{ backgroundPosition: `${-30 * cell + 30}px 0px` }}
                 />
-                /* {cell === -1 && (
+              } */}
+              {cell === -1 && (
                 <div className={styles.sampleStyle} style={{ backgroundPosition: '-300px 0px' }} />
               )}
               {cell === 1 && (
-                <div className={styles.sampleStyle} style={{ backgroundPosition: '0px 0px' }} />
+                <div className={styles.sampleStyle} style={{ backgroundPosition: '0x 0px' }} />
               )}
               {cell === 2 && (
                 <div className={styles.sampleStyle} style={{ backgroundPosition: '-30px 0px' }} />
@@ -139,9 +141,8 @@ const Home = () => {
                 <div className={styles.sampleStyle} style={{ backgroundPosition: '-180px 0px' }} />
               )}
               {cell === 8 && (
-                <div className={styles.sampleStyle} style={{ backgroundPosition: '-210px 0px' }} /> */
-              }
-              {/* )} */}
+                <div className={styles.sampleStyle} style={{ backgroundPosition: '-210px 0px' }} />
+              )}
             </div>
           )),
         )}
